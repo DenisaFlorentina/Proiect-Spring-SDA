@@ -25,22 +25,22 @@ public class PlumberController {
         return plumberService.findAllPlumbers();
     }
     //get endpoint
-    @RequestMapping(value = "{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "{/id}", method = RequestMethod.GET)
     public Plumber findPlumberById(@PathVariable Long id){
         return plumberService.getPlumberById(id);
     }
+    //update
+    @PutMapping("{id}")
+    public void updateById(
+            @PathVariable("id") Long id,
+            @RequestBody Plumber plumber){
+            plumberService.updatePlumberById(id, plumber);
+        }
 
     //delete
-   /* @DeleteMapping
-    @RequestMapping(value = "/id", method = RequestMethod.DELETE)
-    public void deleteById(@PathVariable("id") Long id) {
-        plumberService.deletePlumberById(id);
-    }*/
-
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable("id") Long id) {
         plumberService.deletePlumberById(id);
     }
-
 
 }

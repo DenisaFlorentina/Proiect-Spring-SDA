@@ -28,6 +28,14 @@ public class PlumberService {
     }
 
     //updatePlumber
+    public void updatePlumberById(Long id, Plumber plumber){
+        for (Plumber s: plumberRepository.findAll() ){
+            if(id.equals(s.getPlumberId())){
+                s.setPlumberName(plumber.getPlumberName());
+
+            }
+        }
+    }
 
     //deletePlumber
     public void deletePlumberById(Long id){
