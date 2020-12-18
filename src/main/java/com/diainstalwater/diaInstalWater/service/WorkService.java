@@ -1,7 +1,6 @@
 package com.diainstalwater.diaInstalWater.service;
 
 import com.diainstalwater.diaInstalWater.model.Work;
-
 import com.diainstalwater.diaInstalWater.repository.WorkRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +23,14 @@ public class WorkService {
         return workRepository.findById(id).get();
     }
     //updateWork
+    public void updateWorkById(Long id, Work work){
+        for (Work s: workRepository.findAll() ){
+            if(id.equals(s.getWorkId())){
+                s.setWorkName(work.getWorkName());
+            }
+            workRepository.save(s);
+        }
+    }
 
     //deleteWork
     public void deleteWorkById(Long id){

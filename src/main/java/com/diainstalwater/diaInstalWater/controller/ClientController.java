@@ -27,16 +27,16 @@ public class ClientController {
     public Client findClientById(@PathVariable Long id){
         return clientService.getClientById(id);
     }
+    //update
+    @PutMapping("{id}")
+    public void updateById(
+            @PathVariable("id") Long id,
+            @RequestBody Client client){
+        clientService.updateClientById(id, client);
+    }
     //delete
-   /* @DeleteMapping
-    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
-    public void deleteClientById(Long id){
-        clientService.deleteClientById(id);
-    }*/
-
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable("id") Long id) {
         clientService.deleteClientById(id);
     }
-
 }

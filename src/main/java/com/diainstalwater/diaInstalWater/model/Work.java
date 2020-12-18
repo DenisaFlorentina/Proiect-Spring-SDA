@@ -9,11 +9,11 @@ import javax.persistence.*;
 public class Work {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long serviceId;
+    private long workId;
     @Column
-    private String serviceName;
+    private String workName;
     @Column
-    private float servicePrice;
+    private float workPrice;
 
 
 }

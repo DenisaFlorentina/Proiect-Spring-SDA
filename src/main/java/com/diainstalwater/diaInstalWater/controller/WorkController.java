@@ -1,5 +1,6 @@
 package com.diainstalwater.diaInstalWater.controller;
 
+
 import com.diainstalwater.diaInstalWater.model.Work;
 import com.diainstalwater.diaInstalWater.service.WorkService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,16 +28,16 @@ public class WorkController {
     public Work findWorkById(@PathVariable Long id){
         return workService.getWorkById(id);
     }
+    //update
+    @PutMapping("{id}")
+    public void updateById(
+            @PathVariable("id") Long id,
+            @RequestBody Work work){
+        workService.updateWorkById(id, work);
+    }
     //delete
-   /* @DeleteMapping
-    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
-    public void deleteWorkById(Long id){
-        workService.deleteWorkById(id);
-    }*/
-
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable("id") Long id) {
         workService.deleteWorkById(id);
     }
-
 }

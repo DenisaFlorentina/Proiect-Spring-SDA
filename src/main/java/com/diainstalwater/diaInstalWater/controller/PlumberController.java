@@ -1,7 +1,6 @@
 package com.diainstalwater.diaInstalWater.controller;
 
 import com.diainstalwater.diaInstalWater.model.Plumber;
-import com.diainstalwater.diaInstalWater.model.Work;
 import com.diainstalwater.diaInstalWater.service.PlumberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +24,7 @@ public class PlumberController {
         return plumberService.findAllPlumbers();
     }
     //get endpoint
-    @RequestMapping(value = "{/id}", method = RequestMethod.GET)
+    @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public Plumber findPlumberById(@PathVariable Long id){
         return plumberService.getPlumberById(id);
     }
@@ -36,11 +35,9 @@ public class PlumberController {
             @RequestBody Plumber plumber){
             plumberService.updatePlumberById(id, plumber);
         }
-
     //delete
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable("id") Long id) {
         plumberService.deletePlumberById(id);
     }
-
 }
