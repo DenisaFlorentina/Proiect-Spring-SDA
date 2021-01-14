@@ -25,8 +25,8 @@ public class WorkService {
     //updateWork
     public void updateWorkById(Long id, Work work){
         for (Work s: workRepository.findAll() ){
-            if(id.equals(s.getWorkId())){
-                s.setWorkName(work.getWorkName());
+            if(id.equals(s.getWorkid())){
+                s.setWorkname(work.getWorkname());
             }
             workRepository.save(s);
         }

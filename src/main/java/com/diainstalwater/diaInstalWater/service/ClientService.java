@@ -26,8 +26,8 @@ public class ClientService {
     //updateClient
     public void updateClientById(Long id, Client client){
         for (Client s: clientRepository.findAll() ){
-            if(id.equals(s.getClientId())){
-                s.setClientName(client.getClientName());
+            if(id.equals(s.getClientid())){
+                s.setClientname(client.getClientname());
             }
             clientRepository.save(s);
         }

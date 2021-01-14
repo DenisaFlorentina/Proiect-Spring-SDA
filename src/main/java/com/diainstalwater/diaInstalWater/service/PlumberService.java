@@ -29,8 +29,8 @@ public class PlumberService {
     //update Plumber
    public void updatePlumberById(Long id, Plumber plumber){
         for (Plumber s: plumberRepository.findAll() ){
-            if(id.equals(s.getPlumberId())){
-                s.setPlumberName(plumber.getPlumberName());
+            if(id.equals(s.getPlumberid())){
+                s.setPlumbername(plumber.getPlumbername());
             }
             plumberRepository.save(s);
         }
