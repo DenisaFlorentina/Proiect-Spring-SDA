@@ -3,41 +3,28 @@ package com.diainstalwater.diaInstalWater.controller;
 import com.diainstalwater.diaInstalWater.model.Plumber;
 import com.diainstalwater.diaInstalWater.service.PlumberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
-@RestController
-@RequestMapping("/plumbers")
+
+@Controller
 public class PlumberController {
     @Autowired
     PlumberService plumberService;
-    //create
-    @PostMapping
-    public Plumber addPlumber (@RequestBody Plumber plumber){
-        return plumberService.createPlumber(plumber);
+    @GetMapping("/plumbers")
+    public String getPlumbers(Model model){
+        List<Plumber> plumberList = plumberService.findAllPlumbers();
+        model.addAttribute("plumbers",  plumberList);
+        return "Plumber";
     }
-    //get
-    @RequestMapping(method = RequestMethod.GET)
-    public List<Plumber> findAllPlumbers(){
-        return plumberService.findAllPlumbers();
+
+    @PostMapping("/plumbers/addNew")
+    public String addNew(Plumber plumber) {
+        plumberService.createPlumber(plumber);
+        return "redirect:/plumbers";
     }
-    //get endpoint
-    @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public Plumber findPlumberById(@PathVariable Long id){
-        return plumberService.getPlumberById(id);
-    }
-    //update
-    @PutMapping("{id}")
-    public void updateById(
-            @PathVariable("id") Long id,
-            @RequestBody Plumber plumber){
-            plumberService.updatePlumberById(id, plumber);
-        }
-    //delete
-    @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable("id") Long id) {
-        plumberService.deletePlumberById(id);
-    }
+
 }

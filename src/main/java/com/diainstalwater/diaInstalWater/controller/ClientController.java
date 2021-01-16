@@ -3,40 +3,41 @@ package com.diainstalwater.diaInstalWater.controller;
 import com.diainstalwater.diaInstalWater.model.Client;
 import com.diainstalwater.diaInstalWater.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/clients")
+@Controller
 public class ClientController {
     @Autowired
     ClientService clientService;
-    //create
-    @PostMapping
-    public Client addClient (@RequestBody Client client){
-        return clientService.createClient(client);
+    @GetMapping("/clients")
+    public String getClients(Model model){
+        List<Client> clientList = clientService.findAllClients();
+        model.addAttribute("clients", clientList);  // clients intra in client.html unde fac tabelul
+        return "Client"; // rep html-ul
     }
-    //get
-    @RequestMapping(method = RequestMethod.GET)
-    public List<Client> findAllClients(){
-        return clientService.findAllClients();
+    @PostMapping("/clients/addNew")
+    public String addNew(Client client) {
+        clientService.createClient(client);
+        return "redirect:/clients";
     }
-    //get endpoint
-    @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public Client findClientById(@PathVariable Long id){
+    /*@RequestMapping("/clients/findById")
+    @ResponseBody
+    public Client findById(Long id){
+        return clientService.getClientById(id);
+    }*/    // si metoda asta merge, e metoda lui k
+    @RequestMapping(value = "/clients/findById", method = RequestMethod.GET)
+    @ResponseBody
+    public Client findById(Long id){
         return clientService.getClientById(id);
     }
-    //update
-    @PutMapping("{id}")
-    public void updateById(
-            @PathVariable("id") Long id,
-            @RequestBody Client client){
-        clientService.updateClientById(id, client);
-    }
-    //delete
-    @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable("id") Long id) {
-        clientService.deleteClientById(id);
+
+    @RequestMapping(value = "/clients/update", method = {RequestMethod.PUT, RequestMethod.GET})
+    public String update(Client client) {
+        clientService.updateClient(client);
+        return "redirect:/clients";
     }
 }

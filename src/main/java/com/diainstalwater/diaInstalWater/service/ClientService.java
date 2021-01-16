@@ -11,6 +11,7 @@ import java.util.List;
 public class ClientService {
     @Autowired
     ClientRepository clientRepository;
+
     //create
     public Client createClient(Client newClient){
         return clientRepository.saveAndFlush(newClient);
@@ -23,7 +24,11 @@ public class ClientService {
     public Client getClientById(Long id){
         return clientRepository.findById(id).get();
     }
-    //updateClient
+    //update metoda folosita
+    public Client updateClient(Client client){
+        return clientRepository.saveAndFlush(client);
+    }
+    /*  //updateClient, metoda care nu e folosita
     public void updateClientById(Long id, Client client){
         for (Client s: clientRepository.findAll() ){
             if(id.equals(s.getClientid())){
@@ -31,7 +36,7 @@ public class ClientService {
             }
             clientRepository.save(s);
         }
-    }
+    }*/
     //deleteClient
     public void deleteClientById(Long id){
         clientRepository.deleteById(id);
