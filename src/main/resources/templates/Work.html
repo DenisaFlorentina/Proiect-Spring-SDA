@@ -404,26 +404,26 @@
           <div class="col-lg-12">
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal" data-whatever="@mdo">New Work</button>
               <table class="table table-striped table-advance table-hover">
-              <thead>
+                  <tbody>
               <tr>
-                  <th>Id</th>
-                  <th>Description</th>
-                  <th>Price</th>
-                  <th>Client ID</th>
-                  <th>Plumber ID</th>
-                  <th>Actions</th>
+                  <th><i class="icon_table"></i>Id</th>
+                  <th><i class="icon_table"></i>Description</th>
+                  <th><i class="icon_table"></i>Price</th>
+                  <th><i class="icon_table"></i>Client</th>
+                  <th><i class="icon_table"></i>Plumber</th>
+                  <th><i class="icon_cogs"></i>Actions</th>
               </tr>
-              </thead>
-              <tbody>
               <tr th:each="work:${works}">
                   <td th:text="${work.workid}"></td>
                   <td th:text="${work.workname}"></td>
                   <td th:text="${work.workprice}"></td>
-                  <td th:text="${work.clientid}"></td>
-                  <td th:text="${work.plumberid}"></td>
+                  <td th:text="${work.client.clientname}"></td>
+                  <td th:text="${work.plumber.plumbername}"></td>
                   <td>
                       <div class="btn-group">
-                          <a class="btn btn-primary" id="editButton">Edit</a>
+                          <a class="btn btn-primary" id="editButton" th:href="@{/works/findById/(id=${work.workid})}" ><i class="icon_pencil-edit"></i></a>
+                          <a class="btn btn-success" id="detailsButton" th:href="@{/works/findById/(id=${work.workid})}" ><i class="icon_document_alt"></i></a>
+                          <a class="btn btn-danger"  id="deleteButton" th:href="@{/works/delete/(id=${work.workid})}"><i class="icon_close_alt2"></i></a>
                       </div>
                   </td>
               </tr>
@@ -449,6 +449,7 @@
   </section>
   <!-- container section end -->
   <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <form th:action="@{/works/addNew}" method="post">
       <div class="modal-dialog" role="document">
           <div class="modal-content">
               <div class="modal-header">
@@ -458,77 +459,209 @@
                   </button>
               </div>
               <div class="modal-body">
-                  <form th:action="@{/works/addNew}" method="post">
+
+                  <div class="form-group">
+                      <label for="workidAdd" class="col-form-label">Id:</label>
+                      <input type="text" class="form-control" id="workidAdd" name="workid" readonly>
+                  </div>
+
+                  <div class="form-group">
+                      <label for="ddlClientDetails" class="col-form-label">Client:</label>
+                      <select class="form-control" id="ddlClientAdd" name="clientid">
+                          <option>-SELECT-</option>
+                          <option th:each="client:${clients}"
+                                  th:value="${client.clientid}"
+                                  th:text="${client.clientname}">
+                          </option>
+                      </select>
+                  </div>
+
+                  <div class="form-group">
+                      <label for="ddlPlumberDetails" class="col-form-label">Plumber:</label>
+                      <select class="form-control" id="ddlPlumberAdd" name="plumberid">
+                          <option>-SELECT-</option>
+                          <option th:each="plumber:${plumbers}"
+                                  th:value="${plumber.plumberid}"
+                                  th:text="${plumber.plumbername}">
+                          </option>
+                      </select>
+                  </div>
+
+
                       <div class="form-group">
-                          <label for="recipient-name" class="col-form-label">Id:</label>
-                          <input type="text" class="form-control" id="recipient-name" name="workid">
+                          <label for="worknameAdd" class="col-form-label">Description:</label>
+                          <input type="text" class="form-control" id="worknameAdd" name="workname">
                       </div>
                       <div class="form-group">
-                          <label for="recipient-name" class="col-form-label">Descriere:</label>
-                          <input type="text" class="form-control" id="recipient-name" name="workname">
+                          <label for="workpriceAdd" class="col-form-label">Price:</label>
+                          <input type="text" class="form-control" id="workpriceAdd" name="workprice">
                       </div>
-                      <div class="form-group">
-                          <label for="recipient-name" class="col-form-label">Pret:</label>
-                          <input type="text" class="form-control" id="recipient-name" name="workprice">
-                      </div>
-                      <div class="form-group">
-                          <label for="recipient-name" class="col-form-label">Client ID:</label>
-                          <input type="text" class="form-control" id="recipient-name" name="clientid">
-                      </div>
-                      <div class="form-group">
-                          <label for="recipient-name" class="col-form-label">Plumber ID:</label>
-                          <input type="text" class="form-control" id="recipient-name" name="plumberid">
-                      </div>
+
                       <div class="form-group">
                           <button type="submit" class="btn btn-primary">Submit</button>
                       </div>
-                  </form>
+
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Save</button>
+              </div>
+          </div>
+      </div>
+      </form>
+  </div>
+
+  <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <form th:action="@{/works/update}" method="put">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="editModalLabel">Update Work</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+
+                      <div class="form-group">
+                          <label for="workidEdit" class="col-form-label">Id:</label>
+                          <input type="text" class="form-control" id="workidEdit" name="workid" readonly>
+                      </div>
+
+                  <div class="form-group">
+                      <label for="ddlClientDetails" class="col-form-label">Client:</label>
+                      <select class="form-control" id="ddlClientEdit" name="clientid">
+                          <option>-SELECT-</option>
+                          <option th:each="client:${clients}"
+                                  th:value="${client.clientid}"
+                                  th:text="${client.clientname}">
+                          </option>
+                      </select>
+                  </div>
+
+                  <div class="form-group">
+                      <label for="ddlPlumberDetails" class="col-form-label">Plumber:</label>
+                      <select class="form-control" id="ddlPlumberEdit" name="plumberid">
+                          <option>-SELECT-</option>
+                          <option th:each="plumber:${plumbers}"
+                                  th:value="${plumber.plumberid}"
+                                  th:text="${plumber.plumbername}">
+                          </option>
+                      </select>
+                  </div>
+
+
+                      <div class="form-group">
+                          <label for="worknameEdit" class="col-form-label">Description:</label>
+                          <input type="text" class="form-control" id="worknameEdit" name="workname">
+                      </div>
+                      <div class="form-group">
+                          <label for="workpriceEdit" class="col-form-label">Price:</label>
+                          <input type="text" class="form-control" id="workpriceEdit" name="workprice">
+                      </div>
+
+                      <div class="form-group">
+                          <button type="submit" class="btn btn-primary">Submit</button>
+                      </div>
+
               </div>
               <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
               </div>
           </div>
       </div>
+      </form>
   </div>
 
-  <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+
+  <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+      <form>
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="detailModalLabel">Work Details</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+
+                      <div class="form-group">
+                          <label class="col-form-label">Id:</label>
+                          <input type="text" class="form-control" id="workidDetails" name="workid" readonly>
+                      </div>
+
+                      <div class="form-group">
+                          <label for="ddlClientDetails" class="col-form-label">Client:</label>
+                          <select class="form-control" id="ddlClientDetails" name="clientid">
+                              <option>-SELECT-</option>
+                              <option th:each="client:${clients}"
+                                      th:value="${client.clientid}"
+                                      th:text="${client.clientname}">
+                              </option>
+                          </select>
+                      </div>
+
+                      <div class="form-group">
+                          <label for="ddlPlumberDetails" class="col-form-label">Plumber:</label>
+                          <select class="form-control" id="ddlPlumberDetails" name="plumberid">
+                              <option>-SELECT-</option>
+                              <option th:each="plumber:${plumbers}"
+                                      th:value="${plumber.plumberid}"
+                                      th:text="${plumber.plumbername}">
+                              </option>
+                          </select>
+                      </div>
+
+
+                      <div class="form-group">
+                          <label for="worknameDetails" class="col-form-label">Description:</label>
+                          <input type="text" class="form-control" id="worknameDetails" name="workname" required>
+                      </div>
+
+                      <div class="form-group">
+                          <label class="col-form-label">Price:</label>
+                          <input type="text" class="form-control" id="workpriceDetails" name="workprice" readonly>
+                      </div>
+                      <div class="form-group">
+                          <label class="col-form-label">Last Updated By:</label>
+                          <input type="text" class="form-control" id="lastModifiedByDetails" name="lastModifiedBy" readonly>
+                      </div>
+
+                      <div class="form-group">
+                          <label class="col-form-label">Last Updated On:</label>
+                          <input type="text" class="form-control" id="lastModifiedDateDetails" name="lastModifiedDate" readonly>
+                      </div>
+                  </div>
+                      <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+              </div>
+          </div>
+      </form>
+  </div>
+
+
+
+
+
+
+  <div class="modal" id="deleteModal" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
           <div class="modal-content">
               <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Update Work</h5>
+                  <h5 class="modal-title">Confirm Delete</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                   </button>
               </div>
               <div class="modal-body">
-                  <form th:action="@{/works/addNew}" method="post">
-                      <div class="form-group">
-                          <label for="recipient-name" class="col-form-label">Id:</label>
-                          <input type="text" class="form-control" id="workidEdit" name="workid">
-                      </div>
-                      <div class="form-group">
-                          <label for="recipient-name" class="col-form-label">Descriere:</label>
-                          <input type="text" class="form-control" id="worknameEdit" name="workname">
-                      </div>
-                      <div class="form-group">
-                          <label for="recipient-name" class="col-form-label">Pret:</label>
-                          <input type="text" class="form-control" id="workpriceEdit" name="workprice">
-                      </div>
-                      <div class="form-group">
-                          <label for="recipient-name" class="col-form-label">Client ID:</label>
-                          <input type="text" class="form-control" id="clientidEdit" name="clientid">
-                      </div>
-                      <div class="form-group">
-                          <label for="recipient-name" class="col-form-label">Plumber ID:</label>
-                          <input type="text" class="form-control" id="plumberidEdit" name="plumberid">
-                      </div>
-                      <div class="form-group">
-                          <button type="submit" class="btn btn-primary">Submit</button>
-                      </div>
-                  </form>
+                  <p>Are you sure you want to delete this record?</p>
               </div>
               <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <a class="btn btn-primary" id="confirmDeleteButton" href="">Yes, delete</a>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
               </div>
           </div>
       </div>
@@ -540,6 +673,7 @@
   <script src="js/jquery.scrollTo.min.js"></script>
   <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
   <!--custome script for all page-->
+  <script src="js/scripts.js"></script>
   <script src="js/work.js"></script>
 
 

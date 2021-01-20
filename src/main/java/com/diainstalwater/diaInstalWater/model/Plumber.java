@@ -18,9 +18,9 @@ import java.util.List;
 public class Plumber {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long plumberid;
+    private Long plumberid;
     @Column
     private String plumbername;
-    //@OneToMany(mappedBy = "plumber")
-    //private List<Work> works;
+    @OneToMany(mappedBy = "plumber")
+    private List<Work> works;
 }

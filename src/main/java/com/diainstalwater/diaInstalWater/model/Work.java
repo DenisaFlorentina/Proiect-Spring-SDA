@@ -17,19 +17,19 @@ import javax.persistence.*;
 public class Work {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long workid;
+    private Long workid;
     @Column
     private String workname;
     @Column
-    private float workprice;
+    private Float workprice;
     @ManyToOne
     @JoinColumn(name = "clientid", insertable = false, updatable = false)
     private Client client;
-    private long clientid;
+    private Long clientid;
 
     @ManyToOne
     @JoinColumn(name = "plumberid", insertable = false, updatable = false)
     private Plumber plumber;
-    private long plumberid;
+    private Long plumberid;
 
 }

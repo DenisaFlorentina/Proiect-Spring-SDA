@@ -24,10 +24,10 @@ public class ClientService {
     public Client getClientById(Long id){
         return clientRepository.findById(id).get();
     }
-    //update metoda folosita
+  /*  //update metoda folosita
     public Client updateClient(Client client){
         return clientRepository.saveAndFlush(client);
-    }
+    }*/
     /*  //updateClient, metoda care nu e folosita
     public void updateClientById(Long id, Client client){
         for (Client s: clientRepository.findAll() ){
@@ -38,7 +38,7 @@ public class ClientService {
         }
     }*/
     //deleteClient
-    public void deleteClientById(Long id){
+    public void delete(Long id){
         clientRepository.deleteById(id);
     }
 }

@@ -27,14 +27,14 @@ public class PlumberService {
     }
 
     //update Plumber
-   public void updatePlumberById(Long id, Plumber plumber){
+  /* public void updatePlumberById(Long id, Plumber plumber){
         for (Plumber s: plumberRepository.findAll() ){
             if(id.equals(s.getPlumberid())){
                 s.setPlumbername(plumber.getPlumbername());
             }
             plumberRepository.save(s);
         }
-    }
+    }*/
     //deletePlumber
     public void deletePlumberById(Long id){
         plumberRepository.deleteById(id);

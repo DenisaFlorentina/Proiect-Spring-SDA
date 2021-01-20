@@ -1,5 +1,6 @@
 package com.diainstalwater.diaInstalWater.controller;
 
+import com.diainstalwater.diaInstalWater.model.Client;
 import com.diainstalwater.diaInstalWater.model.Plumber;
 import com.diainstalwater.diaInstalWater.service.PlumberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,22 @@ public class PlumberController {
     @PostMapping("/plumbers/addNew")
     public String addNew(Plumber plumber) {
         plumberService.createPlumber(plumber);
+        return "redirect:/plumbers";
+    }
+    @RequestMapping(value = "/plumbers/findById", method = RequestMethod.GET)
+    @ResponseBody
+    public Plumber findById(Long id){
+        return plumberService.getPlumberById(id);
+    }
+
+    @RequestMapping(value = "/plumbers/update", method = {RequestMethod.PUT, RequestMethod.GET})
+    public String update(Plumber plumber) {
+        plumberService.createPlumber(plumber);
+        return "redirect:/plumbers";
+    }
+    @RequestMapping(value = "/plumbers/delete", method = {RequestMethod.DELETE, RequestMethod.GET})
+    public String delete(Long id) {
+        plumberService.deletePlumberById(id);
         return "redirect:/plumbers";
     }
 

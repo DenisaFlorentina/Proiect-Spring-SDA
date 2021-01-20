@@ -18,17 +18,17 @@ import java.util.List;
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long clientid;
+    private Long clientid;
     @Column
     private String clientname;
     @Column
     private String clientaddress;
     @Column
-    private long clientphone;
+    private String clientphone;
     @Column
     private String clientmail;
 
-   // @OneToMany(mappedBy = "client")
-   // private List<Work> works;
+   @OneToMany(mappedBy = "client")
+   private List<Work> works;
 
 }
