@@ -25,6 +25,7 @@ public class ClientController {
     public String getClients(Model model){
         List<Client> clientList = clientService.findAllClients();
         model.addAttribute("clients", clientList);  // clients intra in client.html unde fac tabelul
+       // model.addAttribute("invisib", true);
 
         /*List<Work> workList = workService.findAllWorks();
         model.addAttribute("works", workList);
@@ -33,6 +34,7 @@ public class ClientController {
         model.addAttribute("plumbers", plumberList);*/
 
         return "Client"; // rep html-ul
+
     }
     @PostMapping("/clients/addNew")
     public String addNew(Client client) {

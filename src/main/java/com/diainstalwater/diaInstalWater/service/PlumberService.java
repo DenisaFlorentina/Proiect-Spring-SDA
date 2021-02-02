@@ -1,13 +1,11 @@
 package com.diainstalwater.diaInstalWater.service;
 
-
 import com.diainstalwater.diaInstalWater.model.Plumber;
 import com.diainstalwater.diaInstalWater.repository.PlumberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 public class PlumberService {

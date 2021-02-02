@@ -43,5 +43,4 @@ public class PlumberController {
         plumberService.deletePlumberById(id);
         return "redirect:/plumbers";
     }
-
 }

@@ -208,5 +208,5 @@ $(function () {
      });
      $('#reportrange span').html(moment().subtract('days', 29).format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
 
-    
+
 });
