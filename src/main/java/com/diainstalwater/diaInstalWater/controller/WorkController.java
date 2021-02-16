@@ -34,16 +34,22 @@ public class WorkController {
 
         return "Work";
     }
+
+
+
     @PostMapping("/works/addNew")
     public String addNew(Work work) {
         workService.createWork(work);
         return "redirect:/works";
     }
+
+
     @RequestMapping(value = "/works/findById", method = RequestMethod.GET)
     @ResponseBody
     public Work findById(Long id){
         return workService.getWorkById(id);
     }
+
     @RequestMapping(value = "/works/update", method = {RequestMethod.PUT, RequestMethod.GET})
     public String update(Work work) {
         workService.createWork(work);
@@ -54,5 +60,6 @@ public class WorkController {
         workService.deleteWorkById(id);
         return "redirect:/works";
     }
+
 
 }

@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity(name = "works")
@@ -21,6 +22,7 @@ public class Work {
     private String workname;
     @Column
     private Float workprice;
+
     @ManyToOne
     @JoinColumn(name = "clientid", insertable = false, updatable = false)
     private Client client;
@@ -30,5 +32,7 @@ public class Work {
     @JoinColumn(name = "plumberid", insertable = false, updatable = false)
     private Plumber plumber;
     private Long plumberid;
+
+
 
 }

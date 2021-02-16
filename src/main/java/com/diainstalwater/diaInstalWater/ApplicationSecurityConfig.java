@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
@@ -48,23 +49,27 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-              // .antMatchers("/").hasAnyAuthority("USER", "ADMIN")
-             //.antMatchers("/new").hasAnyAuthority("ADMIN")
+
+     http.authorizeRequests()
+
               .antMatchers("/clients").hasAnyAuthority("ADMIN")
-                .antMatchers("/plumbers").hasAnyAuthority("ADMIN")
+              .antMatchers("/plumbers").hasAnyAuthority("ADMIN")
+             .antMatchers("/works").hasAnyAuthority("ADMIN")
+             .antMatchers("/users").hasAnyAuthority("ADMIN")
+             .antMatchers("/roles").hasAnyAuthority("ADMIN")
+             .antMatchers("/products").hasAnyAuthority("USER")
+
              //   .antMatchers("/clients").hasRole("ADMIN") // nu merge
              //   .antMatchers("/clients").access("hasRole('ROLE_ADMIN')")  // nu merge
                // .antMatchers("/clients").hasRole("ADMIN")// nu merge
                 //.antMatchers("/edit/**").hasAnyAuthority("ADMIN")
-              //  .antMatchers("/delete/**").hasAuthority("ADMIN")
-              //  .antMatchers("/admin/**").hasAuthority("ADMIN")
                 .antMatchers("/login", "/resources/**", "/css/**", "/fonts/**", "/img/**").permitAll()
                 .antMatchers("/register", "/resources/**", "/css/**", "/fonts/**", "/img/**", "/js/**").permitAll()
                 .antMatchers("/users/addNew").permitAll()
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .anyRequest().authenticated()
-                .and()
+
+          //  .antMatchers("/index").hasAnyAuthority().anyRequest().permitAll()
+               .anyRequest().authenticated()
+             .and()
                 .formLogin()
                 .loginPage("/login").permitAll()
                 .and()
@@ -73,6 +78,42 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login").permitAll();
 
+
+      /*  http
+                .authorizeRequests()
+                .antMatchers("/index").permitAll()
+                .antMatchers("/login", "/resources/**", "/css/**", "/fonts/**", "/img/**").permitAll()
+                .antMatchers("/register", "/resources/**", "/css/**", "/fonts/**", "/img/**", "/js/**").permitAll()
+                .antMatchers("/users/addNew").permitAll()
+                .antMatchers("/clients").permitAll()
+                .antMatchers("/**").permitAll()
+                .and()
+                .formLogin()//
+                .loginPage("/login")//
+                .failureUrl("/login?error=true")//
+                .usernameParameter("username")//
+                .passwordParameter("password")
+                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/logoutSuccessful");
+                .formLogin()
+                .loginPage("/login")
+                .permitAll()
+                .and()
+                .authorizeRequests()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login");*/
+
+               /*  new
+                 .formLogin()//
+                .loginPage("/login")//
+                .failureUrl("/login?error=true")//
+                .usernameParameter("username")//
+                .passwordParameter("password")
+                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/logoutSuccessful");*/
+
     }
 
     @Autowired
@@ -80,8 +121,9 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         authenticationMgr.inMemoryAuthentication()
                 .withUser("USER").password("parola").authorities("ROLE_USER")
                 .and()
-                .withUser("ADMIN").password("parola").authorities("ROLE_USER","ROLE_ADMIN");
+                .withUser("ADMIN").password("parola").authorities("ROLE_USER", "ROLE_ADMIN");
     }
+
 }
 
 

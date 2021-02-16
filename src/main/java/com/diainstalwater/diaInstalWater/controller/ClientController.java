@@ -41,16 +41,16 @@ public class ClientController {
         clientService.createClient(client);
         return "redirect:/clients";
     }
-    /*@RequestMapping("/clients/findById")
+    @RequestMapping("/clients/findById")
     @ResponseBody
     public Client findById(Long id){
         return clientService.getClientById(id);
-    }*/    // si metoda asta merge, e metoda lui k
-    @RequestMapping(value = "/clients/findById", method = RequestMethod.GET) // method = RequestMethod.GET este optional, merege si fara
+    }  // si metoda asta merge, e metoda lui k
+    /*@RequestMapping(value = "/clients/findById", method = RequestMethod.GET) // method = RequestMethod.GET este optional, merege si fara
     @ResponseBody
     public Client findById(Long id){
         return clientService.getClientById(id);
-    }
+    }*/
 
    /* @RequestMapping(value = "/clients/update", method = {RequestMethod.PUT, RequestMethod.GET})
     public String update(Client client) {

@@ -10,6 +10,6 @@ public class IndexController implements ErrorController{
     @RequestMapping(PATH)
     @ResponseBody
     public String getErrorPath() {
-        return "No Mapping Found";
+        return "404 - Page does not exist";
     }
 }

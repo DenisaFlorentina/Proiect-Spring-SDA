@@ -1,5 +1,6 @@
 package com.diainstalwater.diaInstalWater;
 
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -9,6 +10,22 @@ public class ApplicationController {
     @GetMapping("/index")
     public String goHome(){
         return "index";
+    }
+    @GetMapping("/tarife-noapte")
+    public String goToTarifeNoapte(){
+        return "TarifeNoapte";
+    }
+//    @GetMapping("/tarife-servicii")
+//    public String goToTarifeZi(){
+//        return "Product";
+//    }
+    @GetMapping("/despre-noi")
+    public String goAboutUs(){
+        return "despre-noi";
+    }
+    @GetMapping("/contact")
+    public String goToContact(){
+        return "contact";
     }
     @GetMapping("/login")
     public String login(){
